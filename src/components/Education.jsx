@@ -51,6 +51,11 @@ export default function Education() {
                         <Chip label={`Grade: ${edu.grade}`} size="small" sx={{ mt: 1.5, background: `${edu.color}15`, color: edu.color, border: `1px solid ${edu.color}30`, fontWeight: 600, fontSize: "0.72rem" }} />
                       )}
                     </Box>
+                    {edu.logo && (
+                      <Box sx={{ width: 60, height: 60, flexShrink: 0 }}>
+                        <img src={edu.logo} alt={edu.institution} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      </Box>
+                    )}
                   </Paper>
                 </motion.div>
               </Grid>
