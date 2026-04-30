@@ -1,5 +1,4 @@
 // ─── PROFILE DATA ────────────────────────────────────────────────────────────
-// Edit all content here. Components pull data from this file.
 
 export const profile = {
   name: "Sangram Mohapatra",
@@ -17,13 +16,18 @@ I thrive in fast-paced product environments where I own features from Figma to d
 I'm now looking for my next challenge at a product company or startup where I can build impactful, user-facing software at scale.`,
   email: "sangrammohapatra0203@gmail.com",
   phone: "+91 9178287528",
-  location: "Bhubaneswar, Odisha, India",
+  location: "India",
   social: {
     linkedin: "https://linkedin.com/in/sangram-mohapatra",
-    github: "https://github.com/sangrammohapatra",       // ← replace with real URL
-    instagram: "https://instagram.com/sangrammohapatra", // ← replace with real URL
+    github: "https://github.com/sangrammohapatra",
+    instagram: "https://instagram.com/sangrammohapatra",
     whatsapp: "https://wa.me/919178287528",
-    facebook: "https://facebook.com/sangrammohapatra",   // ← replace with real URL
+    facebook: "https://facebook.com/sangrammohapatra",
   },
-  resumeUrl: "/Sangram_Mohapatra_Resume.pdf", // Place your PDF in /public folder
+  resumeUrl: "/Sangram_Mohapatra_Resume.pdf",
+
+  // ── Open-to-work banner ───────────────────────────────────────────────────
+  // Set to false to hide the banner
+  openToWork: true,
+  openToWorkText: "👋 Open to new roles · React · Node.js · Full-Stack",
 };

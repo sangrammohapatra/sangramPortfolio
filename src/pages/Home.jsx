@@ -1,7 +1,9 @@
 import React from "react";
 import { Box } from "@mui/material";
 import Hero from "../components/Hero";
+import TechMarquee from "../components/TechMarquee";
 import About from "../components/About";
+import MetricsCounter from "../components/MetricsCounter";
 import Skills from "../components/Skills";
 import Experience from "../components/Experience";
 import Projects from "../components/Projects";
@@ -15,7 +17,9 @@ export default function Home() {
   return (
     <Box>
       <Hero />
+      <TechMarquee />
       <About />
+      <MetricsCounter />
       <Skills />
       <Experience />
       <Projects />

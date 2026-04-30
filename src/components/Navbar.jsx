@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import {
-  AppBar, Toolbar, Typography, Box, IconButton, Button,
-  Drawer, List, ListItemButton, ListItemText, useMediaQuery, useTheme,
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  IconButton,
+  Button,
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemText,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/WbSunny";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { profile } from "../data/profile";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -18,16 +29,41 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
+// Section IDs to observe for active highlight
+const SECTION_IDS = NAV_LINKS.map((l) => l.href.replace("#", ""));
+
 export default function Navbar({ toggleMode, mode }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
+  // Banner offset — if open-to-work banner visible add ~32px
+  const bannerH = profile.openToWork ? 32 : 0;
 
+  // Scroll shadow
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  // Intersection Observer — active section
+  useEffect(() => {
+    const observers = [];
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(id);
+        },
+        { rootMargin: "-40% 0px -55% 0px" },
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   const handleNav = (href) => {
@@ -43,22 +79,35 @@ export default function Navbar({ toggleMode, mode }) {
         position="fixed"
         elevation={0}
         sx={{
+          top: bannerH,
           background: scrolled
             ? theme.palette.mode === "dark"
-              ? "rgba(6,11,24,0.92)"
-              : "rgba(240,244,255,0.92)"
+              ? "rgba(5,5,5,0.92)"
+              : "rgba(240,255,244,0.92)"
             : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
-          borderBottom: scrolled ? `1px solid ${theme.palette.divider}` : "none",
+          borderBottom: scrolled
+            ? `1px solid ${theme.palette.divider}`
+            : "none",
           transition: "all 0.3s ease",
         }}
       >
-        <Toolbar sx={{ maxWidth: 1200, width: "100%", mx: "auto", px: { xs: 2, md: 4 } }}>
+        <Toolbar
+          sx={{
+            maxWidth: 1200,
+            width: "100%",
+            mx: "auto",
+            px: { xs: 2, md: 4 },
+          }}
+        >
           {/* Logo */}
           <Typography
             component="a"
             href="#hero"
-            onClick={(e) => { e.preventDefault(); handleNav("#hero"); }}
+            onClick={(e) => {
+              e.preventDefault();
+              handleNav("#hero");
+            }}
             sx={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 800,
@@ -69,28 +118,72 @@ export default function Navbar({ toggleMode, mode }) {
               flexGrow: 1,
             }}
           >
-            SM<span style={{ color: theme.palette.text.secondary, fontWeight: 400 }}>.dev</span>
+            SM
+            <span
+              style={{ color: theme.palette.text.secondary, fontWeight: 400 }}
+            >
+              .dev
+            </span>
           </Typography>
 
           {/* Desktop Nav */}
           {!isMobile && (
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-              {NAV_LINKS.map((link) => (
-                <Button
-                  key={link.label}
-                  onClick={() => handleNav(link.href)}
-                  sx={{
-                    color: theme.palette.text.secondary,
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    "&:hover": { color: theme.palette.primary.main, background: "transparent" },
-                  }}
-                >
-                  {link.label}
-                </Button>
-              ))}
-              <IconButton onClick={toggleMode} sx={{ ml: 1, color: theme.palette.text.secondary }}>
-                {mode === "dark" ? <Brightness7Icon fontSize="small" /> : <Brightness4Icon fontSize="small" />}
+              {NAV_LINKS.map((link) => {
+                const isActive = active === link.href.replace("#", "");
+                return (
+                  <Box key={link.label} sx={{ position: "relative" }}>
+                    <Button
+                      onClick={() => handleNav(link.href)}
+                      sx={{
+                        color: isActive
+                          ? theme.palette.primary.main
+                          : theme.palette.text.secondary,
+                        fontSize: "0.875rem",
+                        fontWeight: isActive ? 700 : 500,
+                        "&:hover": {
+                          color: theme.palette.primary.main,
+                          background: "transparent",
+                        },
+                        transition: "color 0.2s",
+                      }}
+                    >
+                      {link.label}
+                    </Button>
+                    {/* Active underline dot */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="nav-indicator"
+                        style={{
+                          position: "absolute",
+                          bottom: 4,
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          width: 4,
+                          height: 4,
+                          borderRadius: "50%",
+                          background: theme.palette.primary.main,
+                          boxShadow: `0 0 8px ${theme.palette.primary.main}`,
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                  </Box>
+                );
+              })}
+              <IconButton
+                onClick={toggleMode}
+                sx={{ ml: 1, color: theme.palette.text.secondary }}
+              >
+                {mode === "dark" ? (
+                  <Brightness7Icon fontSize="small" />
+                ) : (
+                  <Brightness4Icon fontSize="small" />
+                )}
               </IconButton>
             </Box>
           )}
@@ -98,10 +191,21 @@ export default function Navbar({ toggleMode, mode }) {
           {/* Mobile */}
           {isMobile && (
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <IconButton onClick={toggleMode} size="small" sx={{ color: theme.palette.text.secondary }}>
-                {mode === "dark" ? <Brightness7Icon fontSize="small" /> : <Brightness4Icon fontSize="small" />}
+              <IconButton
+                onClick={toggleMode}
+                size="small"
+                sx={{ color: theme.palette.text.secondary }}
+              >
+                {mode === "dark" ? (
+                  <Brightness7Icon fontSize="small" />
+                ) : (
+                  <Brightness4Icon fontSize="small" />
+                )}
               </IconButton>
-              <IconButton onClick={() => setDrawerOpen(true)} sx={{ color: theme.palette.text.primary }}>
+              <IconButton
+                onClick={() => setDrawerOpen(true)}
+                sx={{ color: theme.palette.text.primary }}
+              >
                 <MenuIcon />
               </IconButton>
             </Box>
@@ -129,18 +233,35 @@ export default function Navbar({ toggleMode, mode }) {
           </IconButton>
         </Box>
         <List>
-          {NAV_LINKS.map((link) => (
-            <ListItemButton
-              key={link.label}
-              onClick={() => handleNav(link.href)}
-              sx={{ borderRadius: 2, mb: 0.5 }}
-            >
-              <ListItemText
-                primary={link.label}
-                primaryTypographyProps={{ fontWeight: 600, fontSize: "1rem" }}
-              />
-            </ListItemButton>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = active === link.href.replace("#", "");
+            return (
+              <ListItemButton
+                key={link.label}
+                onClick={() => handleNav(link.href)}
+                sx={{
+                  borderRadius: 2,
+                  mb: 0.5,
+                  background: isActive
+                    ? `${theme.palette.primary.main}12`
+                    : "transparent",
+                  borderLeft: isActive
+                    ? `3px solid ${theme.palette.primary.main}`
+                    : "3px solid transparent",
+                }}
+              >
+                <ListItemText
+                  primary={link.label}
+                  primaryTypographyProps={{
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive
+                      ? theme.palette.primary.main
+                      : theme.palette.text.primary,
+                  }}
+                />
+              </ListItemButton>
+            );
+          })}
         </List>
       </Drawer>
     </>
