@@ -3,11 +3,5 @@
     "api/chat.js": {
       "runtime": "edge"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    }
-  ]
+  }
 }
