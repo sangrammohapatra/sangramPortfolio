@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import OpenToWorkBanner from "./components/OpenToWorkBanner";
 import BackToTop from "./components/BackToTop";
+import AIChatWidget from "./components/AIChatWidget";
 import CursorSpotlight from "./components/CursorSpotlight";
 import Home from "./pages/Home";
 import BlogPost from "./pages/BlogPost";
@@ -34,6 +35,7 @@ export default function App() {
         </Box>
         <Footer />
         <BackToTop />
+        <AIChatWidget />
       </BrowserRouter>
     </ThemeProvider>
   );

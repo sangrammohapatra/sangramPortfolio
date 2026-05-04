@@ -52,8 +52,18 @@ export default function Education() {
                       )}
                     </Box>
                     {edu.logo && (
-                      <Box sx={{ width: 60, height: 60, flexShrink: 0 }}>
-                        <img src={edu.logo} alt={edu.institution} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <Box
+                        sx={{
+                          width: 80,
+                          height: 80,
+                          flexShrink: 0,
+                          alignSelf: "center",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <img src={edu.logo} alt={edu.institution} style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }} />
                       </Box>
                     )}
                   </Paper>

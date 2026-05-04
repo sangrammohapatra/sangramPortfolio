@@ -4,9 +4,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
 import { profile } from "../data/profile";
 
-export default function OpenToWorkBanner() {
+export default function OpenToWorkBanner({ visible, setVisible }) {
   const theme = useTheme();
-  const [visible, setVisible] = useState(true);
 
   if (!profile.openToWork) return null;
 

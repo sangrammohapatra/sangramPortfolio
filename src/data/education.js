@@ -21,6 +21,16 @@ export const education = [
     logo: "./odm.png",
     color: "#ff4d6d",
   },
+  {
+    id: 3,
+    degree: "Secondary Education",
+    institution: "Carmel English Medium School",
+    location: "Bhubaneswar, Odisha, India",
+    year: "2017",
+    grade: "10 CGPA",
+    logo: "./carmel.png",
+    color: "#f0b429",
+  },
 ];
 
 export const certifications = [
