@@ -17,13 +17,14 @@ import { profile } from "./data/profile";
 export default function App() {
   const { mode, theme, toggleMode } = useColorMode();
   const bannerH = profile.openToWork ? 32 : 0;
+  const [visible, setVisible] = React.useState(true);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
         <CursorSpotlight />
-        <OpenToWorkBanner />
+        <OpenToWorkBanner visible={visible} setVisible={setVisible} />
         <Navbar toggleMode={toggleMode} mode={mode} />
         <Box component="main" sx={{ pt: `${bannerH}px` }}>
           <Routes>
