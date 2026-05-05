@@ -2,13 +2,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "rewrites": [
-    { "source": "/api/auth/login", "destination": "/api/auth/login" },
-    { "source": "/api/auth/setup", "destination": "/api/auth/setup" },
-    { "source": "/api/blogs", "destination": "/api/blogs/index" },
-    { "source": "/api/blogs/:slug", "destination": "/api/blogs/[slug]" },
-    { "source": "/api/admin/blogs", "destination": "/api/admin/blogs" },
-    { "source": "/api/admin/blog/:id", "destination": "/api/admin/blog/[id]" },
-    { "source": "/api/ai/chat", "destination": "/api/ai/chat.js" },
+    { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
