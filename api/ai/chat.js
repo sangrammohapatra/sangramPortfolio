@@ -1,19 +1,9 @@
+const setCors = require("../../server/middleware/cors");
 // ─── Vercel Serverless Function — Gemini Flash Proxy ─────────────────────────
-const GEMINI_MODEL = "gemini-1.5-flash-latest";
+const GEMINI_MODEL = "gemini-2.0-flash";
 
 module.exports = async function handler(req, res) {
-  // ── CORS ───────────────────────────────────────────────────────────────────
-  const allowed = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    // Add your Vercel URL after first deploy:
-   "https://sangram-portfolio-three.vercel.app"
-  ];
-  const origin = req.headers.origin || "";
-  res.setHeader("Access-Control-Allow-Origin", allowed.includes(origin) ? origin : allowed[0]);
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Vary", "Origin");
+  setCors(req, res);
 
   if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST")   return res.status(405).send("Method not allowed");
