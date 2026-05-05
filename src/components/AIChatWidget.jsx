@@ -13,10 +13,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { RESUME_CONTEXT, SUGGESTED_QUESTIONS } from "../data/resumeContext";
 
 // ─── Config ──────────────────────────────────────────────────────────────────
-// In dev  → calls Vite proxy → localhost:3000/api/chat → Vercel function
-// In prod → calls /api/chat directly on your Vercel deployment
+// In dev  → calls Vite proxy → localhost:3000/api/ai/chat → Vercel function
+// In prod → calls /api/ai/chat directly on your Vercel deployment
 // No API key ever touches the browser.
-const PROXY_URL = "/api/chat";
+const PROXY_URL = "/api/ai/chat";
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 function TypingDots({ theme }) {

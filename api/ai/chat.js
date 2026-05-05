@@ -7,7 +7,7 @@ module.exports = async function handler(req, res) {
     "http://localhost:3000",
     "http://localhost:5173",
     // Add your Vercel URL after first deploy:
-   "https://sangram-portfolio-three.vercel.app/"
+   "https://sangram-portfolio-three.vercel.app"
   ];
   const origin = req.headers.origin || "";
   res.setHeader("Access-Control-Allow-Origin", allowed.includes(origin) ? origin : allowed[0]);

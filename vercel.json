@@ -8,7 +8,7 @@
     { "source": "/api/blogs/:slug", "destination": "/api/blogs/[slug]" },
     { "source": "/api/admin/blogs", "destination": "/api/admin/blogs" },
     { "source": "/api/admin/blog/:id", "destination": "/api/admin/blog/[id]" },
-    { "source": "/api/chat", "destination": "/api/chat" },
+    { "source": "/api/ai/chat", "destination": "/api/ai/chat" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
