@@ -7,7 +7,11 @@ const auth      = require("../../../server/middleware/auth");
 module.exports = async function handler(req, res) {
   setCors(req, res);
   if (req.method === "OPTIONS") return res.status(204).end();
-  await new Promise((resolve) => auth(req, res, resolve));
+  const authError = auth(req, res);
+
+  if (authError) {
+    return res.status(authError.status).json({ error: authError.error });
+  }
   if (res.writableEnded) return;
   try {
     await connectDB();
@@ -18,7 +22,7 @@ module.exports = async function handler(req, res) {
       return res.json(blog);
     }
     if (req.method === "PUT") {
-      await parseBody(req);
+      // await parseBody(req);
       const updates = req.body || {};
       if (updates.content) {
         const words = updates.content.split(/\s+/).length;
