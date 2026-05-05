@@ -13,7 +13,7 @@ const BlogSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Auto-generate slug from title if not provided
-BlogSchema.pre("validate", function(next) {
+BlogSchema.pre("validate", function() {
   if (this.isModified("title") && !this.slug) {
     this.slug = this.title
       .toLowerCase()
@@ -25,7 +25,6 @@ BlogSchema.pre("validate", function(next) {
   // Auto estimate read time
   const words = this.content?.split(/\s+/).length || 0;
   this.readTime = `${Math.max(1, Math.ceil(words / 200))} min read`;
-  next();
 });
 
 module.exports = mongoose.models.Blog || mongoose.model("Blog", BlogSchema);
