@@ -9,6 +9,7 @@
     "@mui/material": "^5.14.18",
     "@uiw/react-md-editor": "^4.1.0",
     "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "dom-helpers": "^6.0.1",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^10.16.4",
