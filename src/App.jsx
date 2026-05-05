@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import { Analytics } from "@vercel/analytics/react";
@@ -35,10 +35,11 @@ function isAdminRoute() {
 
 function PublicLayout({ children, toggleMode, mode }) {
   const bannerH = profile.openToWork ? 32 : 0;
+  const [visible, setVisible] = useState(true);
   return (
     <>
       <CursorSpotlight />
-      <OpenToWorkBanner />
+      <OpenToWorkBanner visible={visible} setVisible={setVisible} />
       <Navbar toggleMode={toggleMode} mode={mode} />
       <Box component="main" sx={{ pt: `${bannerH}px` }}>
         {children}
