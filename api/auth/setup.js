@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST")   return res.status(405).json({ error: "Method not allowed" });
   if (process.env.ADMIN_SETUP_ENABLED !== "true")
     return res.status(403).json({ error: "Setup disabled. Set ADMIN_SETUP_ENABLED=true in Vercel env vars." });
-  await parseBody(req);
+  // await parseBody(req);
   try {
     await connectDB();
     const { username, password } = req.body || {};
