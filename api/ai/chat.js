@@ -1,6 +1,6 @@
 const setCors = require("../../server/middleware/cors");
 // ─── Vercel Serverless Function — Gemini Flash Proxy ─────────────────────────
-const GEMINI_MODEL = "gemini-2.5-flash-preview-05-20";
+const GEMINI_MODEL = "gemini-2.5-flash-preview-04-17";
 
 module.exports = async function handler(req, res) {
   setCors(req, res);
