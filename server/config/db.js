@@ -6,6 +6,7 @@ async function connectDB() {
   if (cached) return cached;
   if (!process.env.MONGODB_URI) throw new Error("MONGODB_URI env var not set");
   cached = await mongoose.connect(process.env.MONGODB_URI, { bufferCommands: false });
+  console.log("db connected")
   return cached;
 }
 
