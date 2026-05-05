@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, CssBaseline, Box } from "@mui/material";
+import { Analytics } from "@vercel/analytics/react";
 import { useColorMode } from "./hooks/useColorMode";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
@@ -95,6 +96,7 @@ export default function App() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
+      <Analytics />
     </ThemeProvider>
   );
 }
