@@ -2,9 +2,15 @@
 const GEMINI_MODEL = "gemini-1.5-flash-latest";
 
 module.exports = async function handler(req, res) {
-  // ── CORS — allow ALL origins (safe: API key is server-side only) ──────────
-  const origin = req.headers.origin || "*";
-  res.setHeader("Access-Control-Allow-Origin", origin);
+  // ── CORS ───────────────────────────────────────────────────────────────────
+  const allowed = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    // Add your Vercel URL after first deploy:
+   "https://sangram-portfolio-three.vercel.app/"
+  ];
+  const origin = req.headers.origin || "";
+  res.setHeader("Access-Control-Allow-Origin", allowed.includes(origin) ? origin : allowed[0]);
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.setHeader("Vary", "Origin");
