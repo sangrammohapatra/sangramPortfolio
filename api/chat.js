@@ -1,36 +1,25 @@
 // ─── Vercel Serverless Function — Gemini Flash Proxy ─────────────────────────
-// Route: POST /api/chat
-// Runtime: Node.js 18+ (Vercel default — no vercel.json needed)
-// FREE: Gemini 1.5 Flash · 1,500 req/day · aistudio.google.com
-// Uses native fetch (Node 18+) — no extra dependencies.
-
 const GEMINI_MODEL = "gemini-1.5-flash-latest";
 
 module.exports = async function handler(req, res) {
-  // ── CORS ───────────────────────────────────────────────────────────────────
-  const allowed = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    // Add your Vercel URL after first deploy:
-    // "https://sangrammohapatra.vercel.app",
-  ];
-  const origin = req.headers.origin || "";
-  res.setHeader("Access-Control-Allow-Origin", allowed.includes(origin) ? origin : allowed[0]);
+  // ── CORS — allow ALL origins (safe: API key is server-side only) ──────────
+  const origin = req.headers.origin || "*";
+  res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Vary", "Origin");
 
   if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST")   return res.status(405).send("Method not allowed");
 
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return res.status(500).send("Missing GEMINI_API_KEY — add it in Vercel env vars");
+  if (!apiKey) return res.status(500).send("Missing GEMINI_API_KEY");
 
   const { messages, system } = req.body || {};
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).send("Missing messages array");
   }
 
-  // ── Build Gemini request ───────────────────────────────────────────────────
   const geminiPayload = {
     ...(system && { system_instruction: { parts: [{ text: system }] } }),
     contents: messages.map((m) => ({
@@ -54,7 +43,6 @@ module.exports = async function handler(req, res) {
       return res.status(geminiRes.status).send(`Gemini error: ${err}`);
     }
 
-    // ── Stream SSE back ────────────────────────────────────────────────────
     res.setHeader("Content-Type",      "text/event-stream");
     res.setHeader("Cache-Control",     "no-cache");
     res.setHeader("X-Accel-Buffering", "no");
@@ -66,7 +54,6 @@ module.exports = async function handler(req, res) {
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-
       const chunk = decoder.decode(value, { stream: true });
       for (const line of chunk.split("\n").filter((l) => l.startsWith("data: "))) {
         const raw = line.replace("data: ", "").trim();

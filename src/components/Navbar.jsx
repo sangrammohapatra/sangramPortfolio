@@ -19,6 +19,8 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/WbSunny";
 import { motion } from "framer-motion";
 import { profile } from "../data/profile";
+import { Login } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -34,6 +36,7 @@ const SECTION_IDS = NAV_LINKS.map((l) => l.href.replace("#", ""));
 
 export default function Navbar({ toggleMode, mode }) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -71,6 +74,10 @@ export default function Navbar({ toggleMode, mode }) {
     setTimeout(() => {
       document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
     }, 100);
+  };
+
+  const handleLogin = () => {
+    navigate("/admin/login");
   };
 
   return (
@@ -184,6 +191,12 @@ export default function Navbar({ toggleMode, mode }) {
                 ) : (
                   <Brightness4Icon fontSize="small" />
                 )}
+              </IconButton>
+              <IconButton
+                onClick={handleLogin}
+                sx={{ ml: 1, color: theme.palette.text.secondary }}
+              >
+                <Login fontSize="small" />
               </IconButton>
             </Box>
           )}
