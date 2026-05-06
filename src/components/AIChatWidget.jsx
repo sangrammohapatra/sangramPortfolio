@@ -363,7 +363,13 @@ export default function AIChatWidget() {
                         border: `1px solid ${theme.palette.primary.main}30`,
                         display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
-                        <AutoAwesomeIcon sx={{ color: theme.palette.primary.main, fontSize: 24 }} />
+                        {/* <AutoAwesomeIcon sx={{ color: theme.palette.primary.main, fontSize: 24 }} /> */}
+                        <Avatar
+                          src="/AIWidget.png"
+                          alt="Sangram Mohapatra"
+                        >
+                          SM
+                        </Avatar>
                       </Box>
                       <Typography sx={{ fontSize: "0.875rem", fontWeight: 700, color: theme.palette.text.primary, mb: 0.5 }}>
                         Hi! I'm Sangram's AI assistant
