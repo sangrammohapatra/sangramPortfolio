@@ -96,6 +96,7 @@ export default function Hero() {
             maxWidth: 1200,
             width: "100%",
             mx: "auto",
+            py: { xs: 8, md: 12 },
             px: { xs: 3, md: 6 },
             position: "relative",
             zIndex: 1,

@@ -327,7 +327,7 @@ export default function AIChatWidget() {
                   <Box sx={{ display: "flex", alignItems: "center", gap: 0.6, mt: 0.2 }}>
                     <Box sx={{ width: 6, height: 6, borderRadius: "50%", background: theme.palette.primary.main }} />
                     <Typography sx={{ fontSize: "0.7rem", color: theme.palette.text.secondary }}>
-                      AI-powered · Claude
+                      AI-powered · Gemini
                     </Typography>
                   </Box>
                 </Box>
@@ -529,7 +529,7 @@ export default function AIChatWidget() {
                   </IconButton>
                 </Box>
                 <Typography sx={{ fontSize: "0.62rem", color: theme.palette.text.muted, mt: 0.8, textAlign: "center" }}>
-                  Powered by Claude · ⌘. to toggle · Enter to send
+                  Powered by Gemini · ⌘. to toggle · Enter to send
                 </Typography>
               </Box>
             </Paper>

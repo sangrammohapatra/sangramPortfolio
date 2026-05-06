@@ -34,13 +34,13 @@ function isAdminRoute() {
 }
 
 function PublicLayout({ children, toggleMode, mode }) {
-  const bannerH = profile.openToWork ? 32 : 0;
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(profile.openToWork);
+  const bannerH = visible ? 32 : 0;
   return (
     <>
       <CursorSpotlight />
       <OpenToWorkBanner visible={visible} setVisible={setVisible} />
-      <Navbar toggleMode={toggleMode} mode={mode} />
+      <Navbar toggleMode={toggleMode} mode={mode} visible={visible} />
       <Box component="main" sx={{ pt: `${bannerH}px` }}>
         {children}
       </Box>

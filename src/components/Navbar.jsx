@@ -29,12 +29,13 @@ const NAV_LINKS = [
   { label: "Projects", href: "#projects" },
   { label: "Blog", href: "#blog" },
   { label: "Contact", href: "#contact" },
+  { label: "Admin Login", href: "/admin/login" },
 ];
 
 // Section IDs to observe for active highlight
 const SECTION_IDS = NAV_LINKS.map((l) => l.href.replace("#", ""));
 
-export default function Navbar({ toggleMode, mode }) {
+export default function Navbar({ toggleMode, mode, visible }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -42,7 +43,7 @@ export default function Navbar({ toggleMode, mode }) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   // Banner offset — if open-to-work banner visible add ~32px
-  const bannerH = profile.openToWork ? 32 : 0;
+  const bannerH = visible ? 32 : 0;
 
   // Scroll shadow
   useEffect(() => {
@@ -71,6 +72,10 @@ export default function Navbar({ toggleMode, mode }) {
 
   const handleNav = (href) => {
     setDrawerOpen(false);
+    if(href.includes("/admin/login")) {
+      navigate("/admin/login");
+      return;
+    }
     setTimeout(() => {
       document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
     }, 100);

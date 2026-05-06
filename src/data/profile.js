@@ -16,13 +16,13 @@ I thrive in fast-paced product environments where I own features from Figma to d
 I'm now looking for my next challenge at a product company or startup where I can build impactful, user-facing software at scale.`,
   email: "sangrammohapatra0203@gmail.com",
   phone: "+91 9178287528",
-  location: "India",
+  location: "Bhubaneswar, Odisha, India",
   social: {
     linkedin: "https://linkedin.com/in/sangram-mohapatra",
     github: "https://github.com/sangrammohapatra",
-    instagram: "https://instagram.com/sangrammohapatra",
+    instagram: "https://instagram.com/sangramm.__",
     whatsapp: "https://wa.me/919178287528",
-    facebook: "https://facebook.com/sangrammohapatra",
+    facebook: "https://facebook.com/sangram.mohapatra.1426",
   },
   resumeUrl: "/Sangram_Mohapatra_Resume.pdf",
 

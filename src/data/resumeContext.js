@@ -1,5 +1,5 @@
 // ─── RESUME CONTEXT FOR AI CHAT ──────────────────────────────────────────────
-// This is the full context fed to Claude as a system prompt.
+// This is the full context fed to Gemini as a system prompt.
 // Update this whenever your resume changes.
 
 export const RESUME_CONTEXT = `
