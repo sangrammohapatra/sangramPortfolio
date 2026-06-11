@@ -28,6 +28,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import emailjs from "emailjs-com";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import SectionWrapper from "./SectionWrapper";
+import ParticlesBackground from "./ParticlesBackground";
 import { profile } from "../data/profile";
 import { fadeUp } from "../utils/motionVariants";
 
@@ -157,6 +158,8 @@ export default function Contact() {
   };
 
   return (
+    <Box sx={{ position: "relative", overflow: "hidden" }}>
+    <ParticlesBackground variant="contact" />
     <SectionWrapper id="contact" title="Get in Touch" subtitle="CONTACT">
       <Box ref={ref}>
         <Grid container spacing={5}>
@@ -436,7 +439,8 @@ export default function Contact() {
           </Grid>
         </Grid>
       </Box>
-      <Snackbar
+    </SectionWrapper>
+    <Snackbar
         open={snack.open}
         autoHideDuration={5000}
         onClose={() => setSnack({ ...snack, open: false })}
@@ -450,6 +454,6 @@ export default function Contact() {
           {snack.msg}
         </Alert>
       </Snackbar>
-    </SectionWrapper>
+    </Box>
   );
 }

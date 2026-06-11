@@ -18,6 +18,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { profile } from "../data/profile";
 import { fadeUp } from "../utils/motionVariants";
 import ResumeModal from "./ResumeModal";
+import ParticlesBackground from "./ParticlesBackground";
 
 function GridBackground() {
   const theme = useTheme();
@@ -91,6 +92,7 @@ export default function Hero() {
         }}
       >
         <GridBackground />
+        <ParticlesBackground variant="hero" />
         <Box
           sx={{
             maxWidth: 1200,
