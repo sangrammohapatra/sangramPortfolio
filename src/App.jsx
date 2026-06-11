@@ -15,6 +15,7 @@ import CursorSpotlight from "./components/CursorSpotlight";
 import AIChatWidget from "./components/AIChatWidget";
 import NoiseOverlay from "./components/NoiseOverlay";
 import RouteTransition from "./components/RouteTransition";
+import ReadingProgress from "./components/ReadingProgress";
 
 // Public pages
 import Home from "./pages/Home";
@@ -40,6 +41,7 @@ function PublicLayout({ children, toggleMode, mode }) {
   const bannerH = visible ? 32 : 0;
   return (
     <>
+      <ReadingProgress />
       <CursorSpotlight />
       <OpenToWorkBanner visible={visible} setVisible={setVisible} />
       <Navbar toggleMode={toggleMode} mode={mode} visible={visible} />
