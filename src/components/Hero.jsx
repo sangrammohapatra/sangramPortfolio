@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Box,
   Typography,
@@ -8,7 +8,7 @@ import {
   useTheme,
   Stack,
 } from "@mui/material";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import DownloadIcon from "@mui/icons-material/Download";
 import EmailIcon from "@mui/icons-material/Email";
@@ -74,6 +74,12 @@ function GridBackground() {
 export default function Hero() {
   const theme = useTheme();
   const [resumeOpen, setResumeOpen] = useState(false);
+  const { scrollY } = useScroll();
+
+  // Parallax layers — different speeds create depth
+  const nameY     = useTransform(scrollY, [0, 600], [0, -55]);
+  const subtitleY = useTransform(scrollY, [0, 600], [0, -80]);
+  const avatarY   = useTransform(scrollY, [0, 600], [0, -38]);
 
   const handleContact = () =>
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
@@ -138,6 +144,7 @@ export default function Hero() {
               initial="hidden"
               animate="visible"
               custom={1}
+              style={{ y: nameY }}
             >
               <Typography
                 variant="h1"
@@ -162,6 +169,7 @@ export default function Hero() {
               initial="hidden"
               animate="visible"
               custom={2}
+              style={{ y: subtitleY }}
             >
               <Typography
                 sx={{
@@ -194,6 +202,7 @@ export default function Hero() {
               initial="hidden"
               animate="visible"
               custom={3}
+              style={{ y: subtitleY }}
             >
               <Typography
                 sx={{
@@ -295,6 +304,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            style={{ y: avatarY }}
           >
             <Box sx={{ position: "relative", flexShrink: 0 }}>
               <Box

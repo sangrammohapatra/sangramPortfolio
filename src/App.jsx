@@ -13,6 +13,8 @@ import OpenToWorkBanner from "./components/OpenToWorkBanner";
 import BackToTop from "./components/BackToTop";
 import CursorSpotlight from "./components/CursorSpotlight";
 import AIChatWidget from "./components/AIChatWidget";
+import NoiseOverlay from "./components/NoiseOverlay";
+import RouteTransition from "./components/RouteTransition";
 
 // Public pages
 import Home from "./pages/Home";
@@ -57,8 +59,10 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <NoiseOverlay />
       <AuthProvider>
         <BrowserRouter>
+          <RouteTransition />
           <Routes>
             {/* ── Public routes ── */}
             <Route path="/" element={

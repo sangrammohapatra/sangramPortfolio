@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import SplitText from "./SplitText";
 
 export default function SectionWrapper({ id, title, subtitle, children, sx = {} }) {
   const theme = useTheme();
@@ -21,12 +22,12 @@ export default function SectionWrapper({ id, title, subtitle, children, sx = {} 
       }}
     >
       {title && (
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <Box sx={{ mb: { xs: 5, md: 7 } }}>
+        <Box sx={{ mb: { xs: 5, md: 7 } }}>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.4 }}
+          >
             <Typography
               variant="overline"
               sx={{
@@ -40,27 +41,27 @@ export default function SectionWrapper({ id, title, subtitle, children, sx = {} 
             >
               {subtitle || ""}
             </Typography>
-            <Typography variant="h2" sx={{
-              fontSize: { xs: "2rem", md: "2.6rem" },
-              letterSpacing: "-0.03em",
-              color: theme.palette.text.primary,
-              position: "relative",
-              display: "inline-block",
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                bottom: -8,
-                left: 0,
-                width: 48,
-                height: 4,
-                borderRadius: 2,
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-              },
-            }}>
-              {title}
-            </Typography>
-          </Box>
-        </motion.div>
+          </motion.div>
+          <Typography variant="h2" sx={{
+            fontSize: { xs: "2rem", md: "2.6rem" },
+            letterSpacing: "-0.03em",
+            color: theme.palette.text.primary,
+            position: "relative",
+            display: "inline-block",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: -8,
+              left: 0,
+              width: 48,
+              height: 4,
+              borderRadius: 2,
+              background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            },
+          }}>
+            <SplitText text={title} isInView={isInView} />
+          </Typography>
+        </Box>
       )}
       {children}
     </Box>
