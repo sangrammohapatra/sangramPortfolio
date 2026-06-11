@@ -12,23 +12,27 @@ const METRICS = [
   { value: 35, suffix: "%", label: "Faster page load times", icon: "🚀" },
 ];
 
+const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
 function Counter({ target, suffix, isInView }) {
   const [count, setCount] = useState(0);
   const started = useRef(false);
+  const rafRef = useRef(null);
 
   useEffect(() => {
     if (!isInView || started.current) return;
     started.current = true;
     const duration = 1800;
-    const steps = 50;
-    const step = target / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current = Math.min(current + step, target);
-      setCount(Math.round(current));
-      if (current >= target) clearInterval(timer);
-    }, duration / steps);
-    return () => clearInterval(timer);
+    const startTime = performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      setCount(Math.round(easeOutQuart(progress) * target));
+      if (progress < 1) rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
   }, [isInView, target]);
 
   return (
