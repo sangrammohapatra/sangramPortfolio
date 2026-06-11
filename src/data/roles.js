@@ -6,36 +6,40 @@ export const roles = [
     id: 1,
     title: "Technical Mentor",
     organization: "Incture Technologies",
-    duration: "2023 – Present",
-    description: "Mentored junior developers on React architecture and Node.js best practices. Conducted code reviews and onboarding sessions for new team members.",
+    duration: "2025 – Present",
+    description:
+      "Mentored junior developers on React architecture and Node.js best practices. Conducted code reviews and onboarding sessions for new team members.",
     icon: "🎓",
     color: "#00ff87",
   },
   {
     id: 2,
-    title: "[Club / Committee Role]",          // ← Replace
-    organization: "[Organization Name]",        // ← Replace
-    duration: "[Year – Year]",
-    description: "[Describe your role, responsibilities, and impact in 1–2 sentences.]",
-    icon: "🏛️",
+    title: "Placement Coordinator",
+    organization: "Odisha University of Technology and Research",
+    duration: "2021 – 2023",
+    description:
+      "Coordinated placement activities, liaised with companies, and organized training sessions for students.",
+    icon: "📚",
     color: "#f0b429",
   },
   {
     id: 3,
-    title: "[Volunteer / Leadership Role]",     // ← Replace
-    organization: "[Organization Name]",
-    duration: "[Year – Year]",
-    description: "[Describe your contribution and what you achieved.]",
-    icon: "🤝",
-    color: "#ff4d6d",
+    title: "Convener",
+    organization: "Technical Club of O.U.T.R",
+    duration: "2022-2023",
+    description:
+      "Organized and led technical events, workshops, and hackathons, fostering a collaborative environment for students to develop their skills.",
+    icon: "⚙️",
+    color: "#00bfff",
   },
   {
     id: 4,
-    title: "[Hackathon / Competition]",         // ← Replace
-    organization: "[Event / Organizer]",
-    duration: "[Year]",
-    description: "[Describe the event, what you built, and any placement/recognition.]",
-    icon: "🏆",
-    color: "#f0b429",
+    title: "School Captain",
+    organization: "Carmel English Medium School",
+    duration: "2016 – 2017",
+    description:
+      "Led the student council, organized school events, and represented the student body in meetings with the administration.",
+    icon: "👑",
+    color: "#ff4d6d",
   },
 ];
