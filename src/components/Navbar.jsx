@@ -7,9 +7,11 @@ import {
   IconButton,
   Button,
   Drawer,
+  Divider,
   List,
   ListItemButton,
   ListItemText,
+  ListItemIcon,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -17,10 +19,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/WbSunny";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { motion } from "framer-motion";
 import { profile } from "../data/profile";
-import { Login } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -29,7 +33,6 @@ const NAV_LINKS = [
   { label: "Projects", href: "#projects" },
   { label: "Blog", href: "#blog" },
   { label: "Contact", href: "#contact" },
-  { label: "Admin Login", href: "/admin/login" },
 ];
 
 // Section IDs to observe for active highlight
@@ -38,6 +41,7 @@ const SECTION_IDS = NAV_LINKS.map((l) => l.href.replace("#", ""));
 export default function Navbar({ toggleMode, mode, visible }) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { admin, logout } = useAuth();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -81,8 +85,11 @@ export default function Navbar({ toggleMode, mode, visible }) {
     }, 100);
   };
 
-  const handleLogin = () => {
-    navigate("/admin/login");
+  const handleLogin = () => navigate("/admin/login");
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -197,12 +204,35 @@ export default function Navbar({ toggleMode, mode, visible }) {
                   <Brightness4Icon fontSize="small" />
                 )}
               </IconButton>
-              <IconButton
-                onClick={handleLogin}
-                sx={{ ml: 1, color: theme.palette.text.secondary }}
-              >
-                <Login fontSize="small" />
-              </IconButton>
+              {admin ? (
+                <Button
+                  onClick={handleLogout}
+                  startIcon={<LogoutIcon fontSize="small" />}
+                  size="small"
+                  sx={{
+                    ml: 1,
+                    color: theme.palette.error.main,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    border: `1px solid ${theme.palette.error.main}40`,
+                    borderRadius: 2,
+                    px: 1.5,
+                    "&:hover": {
+                      background: `${theme.palette.error.main}10`,
+                      borderColor: theme.palette.error.main,
+                    },
+                  }}
+                >
+                  Logout
+                </Button>
+              ) : (
+                <IconButton
+                  onClick={handleLogin}
+                  sx={{ ml: 1, color: theme.palette.text.secondary }}
+                >
+                  <LoginIcon fontSize="small" />
+                </IconButton>
+              )}
             </Box>
           )}
 
@@ -280,6 +310,50 @@ export default function Navbar({ toggleMode, mode, visible }) {
               </ListItemButton>
             );
           })}
+
+          <Divider sx={{ my: 1 }} />
+
+          {admin ? (
+            <ListItemButton
+              onClick={() => { setDrawerOpen(false); handleLogout(); }}
+              sx={{
+                borderRadius: 2,
+                borderLeft: `3px solid ${theme.palette.error.main}40`,
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 36, color: theme.palette.error.main }}>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Logout"
+                primaryTypographyProps={{
+                  fontWeight: 600,
+                  color: theme.palette.error.main,
+                  fontSize: "0.9rem",
+                }}
+              />
+            </ListItemButton>
+          ) : (
+            <ListItemButton
+              onClick={() => { setDrawerOpen(false); handleLogin(); }}
+              sx={{
+                borderRadius: 2,
+                borderLeft: `3px solid ${theme.palette.divider}`,
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 36, color: theme.palette.text.secondary }}>
+                <LoginIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Admin Login"
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                  color: theme.palette.text.secondary,
+                  fontSize: "0.9rem",
+                }}
+              />
+            </ListItemButton>
+          )}
         </List>
       </Drawer>
     </>
