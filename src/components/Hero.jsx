@@ -19,6 +19,7 @@ import { profile } from "../data/profile";
 import { fadeUp } from "../utils/motionVariants";
 import ResumeModal from "./ResumeModal";
 import ParticlesBackground from "./ParticlesBackground";
+import MagneticButton from "./MagneticButton";
 
 function GridBackground() {
   const theme = useTheme();
@@ -219,42 +220,48 @@ export default function Hero() {
                 spacing={2}
                 sx={{ mb: 4 }}
               >
-                <Button
-                  variant="contained"
-                  startIcon={<EmailIcon />}
-                  onClick={handleContact}
-                  size="large"
-                  sx={{ fontSize: "0.95rem" }}
-                >
-                  Get in Touch
-                </Button>
-                <Button
-                  variant="outlined"
-                  startIcon={<VisibilityIcon />}
-                  size="large"
-                  onClick={() => setResumeOpen(true)}
-                  sx={{
-                    borderColor: theme.palette.divider,
-                    color: theme.palette.text.primary,
-                    "&:hover": { borderColor: theme.palette.primary.main },
-                    fontSize: "0.95rem",
-                  }}
-                >
-                  View Resume
-                </Button>
-                <Button
-                  variant="text"
-                  startIcon={<DownloadIcon />}
-                  href={profile.resumeUrl}
-                  download
-                  size="large"
-                  sx={{
-                    color: theme.palette.text.secondary,
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  Download
-                </Button>
+                <MagneticButton>
+                  <Button
+                    variant="contained"
+                    startIcon={<EmailIcon />}
+                    onClick={handleContact}
+                    size="large"
+                    sx={{ fontSize: "0.95rem" }}
+                  >
+                    Get in Touch
+                  </Button>
+                </MagneticButton>
+                <MagneticButton>
+                  <Button
+                    variant="outlined"
+                    startIcon={<VisibilityIcon />}
+                    size="large"
+                    onClick={() => setResumeOpen(true)}
+                    sx={{
+                      borderColor: theme.palette.divider,
+                      color: theme.palette.text.primary,
+                      "&:hover": { borderColor: theme.palette.primary.main },
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    View Resume
+                  </Button>
+                </MagneticButton>
+                <MagneticButton>
+                  <Button
+                    variant="text"
+                    startIcon={<DownloadIcon />}
+                    href={profile.resumeUrl}
+                    download
+                    size="large"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Download
+                  </Button>
+                </MagneticButton>
               </Stack>
             </motion.div>
 
