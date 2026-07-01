@@ -10,7 +10,9 @@ export default defineConfig({
     open: true,
     proxy: {
       "/api": {
-        target: "http://localhost:3001",
+        // Use 127.0.0.1 (not localhost) — avoids Windows ENOBUFS bug
+        // where localhost resolves to both IPv4+IPv6 simultaneously
+        target: "http://127.0.0.1:3001",
         changeOrigin: true,
       },
     },

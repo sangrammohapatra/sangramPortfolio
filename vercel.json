@@ -9,6 +9,7 @@
     { "source": "/api/admin/blogs", "destination": "/api/admin/blogs" },
     { "source": "/api/admin/blog/:id", "destination": "/api/admin/blog/[id]" },
     { "source": "/api/ai/chat", "destination": "/api/ai/chat" },
+    { "source": "/api/github/analyze", "destination": "/api/github/analyze" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

@@ -87,7 +87,7 @@ export const projects = [
     category: "Personal",
     featured: false,
     liveUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/sangrammohapatra/sangramPortfolio",
     color: "#ff4d6d",
     image: null,
     caseStudy: {

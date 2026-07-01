@@ -21,6 +21,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { projects } from "../data/projects";
 import { fadeUp } from "../utils/motionVariants";
+import ProjectRepoInsights from "../components/ProjectRepoInsights";
 
 function Section({ title, children, delay = 0, isInView = true }) {
   const theme = useTheme();
@@ -459,6 +460,43 @@ export default function ProjectCaseStudy() {
             </Section>
           </Grid>
         </Grid>
+
+        {project.githubUrl && (
+          <>
+            <Divider sx={{ mb: 5 }} />
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={10}
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  color: theme.palette.text.primary,
+                  mb: 3,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  "&::before": {
+                    content: '""',
+                    display: "inline-block",
+                    width: 4,
+                    height: 20,
+                    borderRadius: 2,
+                    background: project.color,
+                    boxShadow: `0 0 12px ${project.color}`,
+                  },
+                }}
+              >
+                Repository Insights
+              </Typography>
+              <ProjectRepoInsights githubUrl={project.githubUrl} projectColor={project.color} />
+            </motion.div>
+          </>
+        )}
 
         <Divider sx={{ my: 6 }} />
 

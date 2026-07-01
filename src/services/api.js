@@ -24,6 +24,15 @@ export const authAPI = {
     }).then(handle),
 };
 
+export const analyzeAPI = {
+  analyze: (github_url) =>
+    fetch(`${BASE}/github/analyze`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ github_url }),
+    }).then(handle),
+};
+
 export const adminBlogAPI = {
   getAll:  ()      => fetch(`${BASE}/admin/blogs`,      { headers: authHeaders() }).then(handle),
   getById: (id)    => fetch(`${BASE}/admin/blog/${id}`, { headers: authHeaders() }).then(handle),
