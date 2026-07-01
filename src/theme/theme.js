@@ -1,4 +1,9 @@
 import { createTheme } from "@mui/material/styles";
+import { getStyleOverrides as glassmorphism } from "./styles/glassmorphism";
+import { getStyleOverrides as neomorphism } from "./styles/neomorphism";
+import { getStyleOverrides as aurora } from "./styles/aurora";
+import { getStyleOverrides as neobrutalism } from "./styles/neobrutalism";
+import { getStyleOverrides as cyberpunk } from "./styles/cyberpunk";
 
 // ─── Design Tokens ────────────────────────────────────────────────────────────
 // Palette: Pure black base, neon green primary, warm gold accent.
@@ -9,8 +14,41 @@ const GOLD  = "#f0b429";   // warm gold
 const CORAL = "#ff4d6d";   // coral accent
 const DIM   = "#00cc6a";   // dimmed green for dark states
 
-export const getTheme = (mode) =>
-  createTheme({
+const STYLE_OVERRIDES = {
+  glassmorphism,
+  neomorphism,
+  aurora,
+  neobrutalism,
+  cyberpunk,
+};
+
+// Deep-merge helper for the small, known-shape theme option objects we merge
+// here (palette / typography / components.*.styleOverrides). Arrays are
+// replaced, not merged.
+function mergeDeep(base, override) {
+  if (!override) return base;
+  const result = { ...base };
+  for (const key of Object.keys(override)) {
+    const overrideVal = override[key];
+    const baseVal = base[key];
+    if (
+      overrideVal &&
+      typeof overrideVal === "object" &&
+      !Array.isArray(overrideVal) &&
+      baseVal &&
+      typeof baseVal === "object" &&
+      !Array.isArray(baseVal)
+    ) {
+      result[key] = mergeDeep(baseVal, overrideVal);
+    } else {
+      result[key] = overrideVal;
+    }
+  }
+  return result;
+}
+
+export const getTheme = (mode, uiStyle = "default") => {
+  const base = {
     palette: {
       mode,
       ...(mode === "dark"
@@ -101,4 +139,12 @@ export const getTheme = (mode) =>
         },
       },
     },
-  });
+  };
+
+  if (uiStyle === "default" || !STYLE_OVERRIDES[uiStyle]) {
+    return createTheme(base);
+  }
+
+  const overrides = STYLE_OVERRIDES[uiStyle](mode);
+  return createTheme(mergeDeep(base, overrides));
+};

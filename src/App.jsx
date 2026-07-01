@@ -4,6 +4,7 @@ import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import { Analytics } from "@vercel/analytics/react";
 import { useColorMode } from "./hooks/useColorMode";
 import { AuthProvider } from "./context/AuthContext";
+import { ThemeStyleProvider, useThemeStyle } from "./context/ThemeStyleContext";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 // Layout
@@ -14,6 +15,8 @@ import BackToTop from "./components/BackToTop";
 import CursorSpotlight from "./components/CursorSpotlight";
 import AIChatWidget from "./components/AIChatWidget";
 import NoiseOverlay from "./components/NoiseOverlay";
+import AuroraBackground from "./components/AuroraBackground";
+import CyberpunkScanlines from "./components/CyberpunkScanlines";
 import RouteTransition from "./components/RouteTransition";
 import ReadingProgress from "./components/ReadingProgress";
 
@@ -55,13 +58,16 @@ function PublicLayout({ children, toggleMode, mode }) {
   );
 }
 
-export default function App() {
-  const { mode, theme, toggleMode } = useColorMode();
+function AppRoutes() {
+  const { uiStyle } = useThemeStyle();
+  const { mode, theme, toggleMode } = useColorMode(uiStyle);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <NoiseOverlay />
+      {uiStyle === "aurora" && <AuroraBackground />}
+      {uiStyle === "cyberpunk" && <CyberpunkScanlines />}
       <AuthProvider>
         <BrowserRouter>
           <RouteTransition />
@@ -105,5 +111,13 @@ export default function App() {
       </AuthProvider>
       <Analytics />
     </ThemeProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeStyleProvider>
+      <AppRoutes />
+    </ThemeStyleProvider>
   );
 }

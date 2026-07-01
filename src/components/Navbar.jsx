@@ -12,6 +12,9 @@ import {
   ListItemButton,
   ListItemText,
   ListItemIcon,
+  Menu,
+  MenuItem,
+  ListSubheader,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -21,10 +24,12 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/WbSunny";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import PaletteIcon from "@mui/icons-material/Palette";
 import { motion } from "framer-motion";
 import { profile } from "../data/profile";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useThemeStyle } from "../context/ThemeStyleContext";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -35,6 +40,15 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
+const UI_STYLE_OPTIONS = [
+  { value: "default", label: "Default" },
+  // { value: "glassmorphism", label: "Glassmorphism" },
+  // { value: "neomorphism", label: "Neomorphism" },
+  // { value: "aurora", label: "Aurora UI" },
+  // { value: "neobrutalism", label: "Neo-Brutalism" },
+  { value: "cyberpunk", label: "Cyberpunk" },
+];
+
 // Section IDs to observe for active highlight
 const SECTION_IDS = NAV_LINKS.map((l) => l.href.replace("#", ""));
 
@@ -42,10 +56,12 @@ export default function Navbar({ toggleMode, mode, visible }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const { admin, logout } = useAuth();
+  const { uiStyle, setUiStyle } = useThemeStyle();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
+  const [styleMenuAnchor, setStyleMenuAnchor] = useState(null);
   // Banner offset — if open-to-work banner visible add ~32px
   const bannerH = visible ? 32 : 0;
 
@@ -90,6 +106,13 @@ export default function Navbar({ toggleMode, mode, visible }) {
   const handleLogout = () => {
     logout();
     navigate("/");
+  };
+
+  const openStyleMenu = (e) => setStyleMenuAnchor(e.currentTarget);
+  const closeStyleMenu = () => setStyleMenuAnchor(null);
+  const handleSelectStyle = (value) => {
+    setUiStyle(value);
+    closeStyleMenu();
   };
 
   return (
@@ -204,6 +227,40 @@ export default function Navbar({ toggleMode, mode, visible }) {
                   <Brightness4Icon fontSize="small" />
                 )}
               </IconButton>
+              <IconButton
+                onClick={openStyleMenu}
+                sx={{ ml: 0.5, color: theme.palette.text.secondary }}
+                aria-label="Change UI style"
+              >
+                <PaletteIcon fontSize="small" />
+              </IconButton>
+              <Menu
+                anchorEl={styleMenuAnchor}
+                open={Boolean(styleMenuAnchor)}
+                onClose={closeStyleMenu}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+              >
+                <ListSubheader sx={{ lineHeight: "2.2rem" }}>
+                  UI Style
+                </ListSubheader>
+                {UI_STYLE_OPTIONS.map((opt) => (
+                  <MenuItem
+                    key={opt.value}
+                    selected={uiStyle === opt.value}
+                    onClick={() => handleSelectStyle(opt.value)}
+                    sx={{
+                      fontWeight: uiStyle === opt.value ? 700 : 400,
+                      color:
+                        uiStyle === opt.value
+                          ? theme.palette.primary.main
+                          : "inherit",
+                    }}
+                  >
+                    {opt.label}
+                  </MenuItem>
+                ))}
+              </Menu>
               {admin ? (
                 <Button
                   onClick={handleLogout}
@@ -310,6 +367,51 @@ export default function Navbar({ toggleMode, mode, visible }) {
               </ListItemButton>
             );
           })}
+
+          <Divider sx={{ my: 1 }} />
+
+          <Typography
+            variant="caption"
+            sx={{
+              pl: 2,
+              color: theme.palette.text.secondary,
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+            }}
+          >
+            UI Style
+          </Typography>
+          {UI_STYLE_OPTIONS.map((opt) => (
+            <ListItemButton
+              key={opt.value}
+              onClick={() => handleSelectStyle(opt.value)}
+              sx={{
+                borderRadius: 2,
+                mb: 0.5,
+                background:
+                  uiStyle === opt.value
+                    ? `${theme.palette.primary.main}12`
+                    : "transparent",
+                borderLeft:
+                  uiStyle === opt.value
+                    ? `3px solid ${theme.palette.primary.main}`
+                    : "3px solid transparent",
+              }}
+            >
+              <ListItemText
+                primary={opt.label}
+                primaryTypographyProps={{
+                  fontWeight: uiStyle === opt.value ? 700 : 500,
+                  fontSize: "0.9rem",
+                  color:
+                    uiStyle === opt.value
+                      ? theme.palette.primary.main
+                      : theme.palette.text.primary,
+                }}
+              />
+            </ListItemButton>
+          ))}
 
           <Divider sx={{ my: 1 }} />
 
