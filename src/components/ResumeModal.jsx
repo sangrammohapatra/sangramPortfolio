@@ -17,6 +17,7 @@ import { profile } from "../data/profile";
 
 export default function ResumeModal({ open, onClose }) {
   const theme = useTheme();
+  const isPdf = profile.resumeUrl.toLowerCase().endsWith(".pdf");
   return (
     <Dialog
       open={open}
@@ -56,42 +57,47 @@ export default function ResumeModal({ open, onClose }) {
       </DialogTitle>
 
       <DialogContent sx={{ p: 0, height: { xs: "60vh", md: "75vh" } }}>
-        <Box sx={{ width: "100%", height: "100%", background: "#222" }}>
-          <iframe
-            src={`${profile.resumeUrl}#toolbar=0`}
-            title="Resume"
-            width="100%"
-            height="100%"
-            style={{ border: "none", display: "block" }}
-          />
-        </Box>
-        {/* Fallback message if PDF doesn't load */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            textAlign: "center",
-            zIndex: -1,
-          }}
-        >
-          <Typography
-            sx={{ color: theme.palette.text.muted, fontSize: "0.85rem" }}
+        {isPdf ? (
+          <Box sx={{ width: "100%", height: "100%", background: "#222" }}>
+            <iframe
+              src={`${profile.resumeUrl}#toolbar=0`}
+              title="Resume"
+              width="100%"
+              height="100%"
+              style={{ border: "none", display: "block" }}
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              gap: 1,
+              px: 2,
+            }}
           >
-            PDF preview not available in this browser.
-          </Typography>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{ mt: 1 }}
-            href={profile.resumeUrl}
-            target="_blank"
-            startIcon={<OpenInNewIcon />}
-          >
-            Open in new tab
-          </Button>
-        </Box>
+            <Typography
+              sx={{ color: theme.palette.text.secondary, fontSize: "0.9rem" }}
+            >
+              Preview isn't available for this file type in-browser.
+            </Typography>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ mt: 1 }}
+              href={profile.resumeUrl}
+              target="_blank"
+              startIcon={<OpenInNewIcon />}
+            >
+              Open in new tab
+            </Button>
+          </Box>
+        )}
       </DialogContent>
 
       <DialogActions
