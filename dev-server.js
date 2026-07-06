@@ -26,6 +26,8 @@ function matchRoute(pattern, pathname) {
 // Vercel uses [param] filenames; Express uses :param — we bridge them via req.query
 const ROUTES = [
   { pattern: "/api/auth/login",      handler: require("./api/auth/login") },
+  { pattern: "/api/auth/logout",     handler: require("./api/auth/logout") },
+  { pattern: "/api/auth/me",         handler: require("./api/auth/me") },
   { pattern: "/api/auth/setup",      handler: require("./api/auth/setup") },
   { pattern: "/api/blogs",           handler: require("./api/blogs/index") },
   { pattern: "/api/blogs/:slug",     handler: require("./api/blogs/[slug]") },

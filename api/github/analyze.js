@@ -3,9 +3,14 @@
 const setCors = require("../../server/middleware/cors");
 const connectDB = require("../../server/config/db");
 const RepoAnalysis = require("../../server/models/RepoAnalysis");
+const rateLimit = require("../../server/middleware/rateLimit");
 
 const GEMINI_MODEL = "gemini-2.5-flash";
 const CACHE_TTL_DAYS = 7;
+
+// 15 requests per hour per IP — only gates fresh analyses (cache hits are
+// served above this check), since those are the ones that hit paid GitHub/Gemini APIs.
+const analyzeRateLimit = rateLimit({ windowMs: 60 * 60 * 1000, max: 15, prefix: "gh-analyze" });
 
 function parseGitHubUrl(url) {
   const match = url.match(/github\.com\/([^/\s]+)\/([^/\s?#]+)/);
@@ -222,6 +227,9 @@ module.exports = async function handler(req, res) {
         return res.json({ ...cached.toObject(), cached: true });
       }
     }
+
+    // Only fresh analyses (past this point) call the paid GitHub/Gemini APIs
+    if (await analyzeRateLimit(req, res)) return;
 
     // Fetch GitHub metadata
     const githubData = await fetchRepoMeta(parsed.owner, parsed.repo);

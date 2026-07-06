@@ -3,6 +3,8 @@
   "outputDirectory": "build",
   "rewrites": [
     { "source": "/api/auth/login", "destination": "/api/auth/login" },
+    { "source": "/api/auth/logout", "destination": "/api/auth/logout" },
+    { "source": "/api/auth/me", "destination": "/api/auth/me" },
     { "source": "/api/auth/setup", "destination": "/api/auth/setup" },
     { "source": "/api/blogs", "destination": "/api/blogs/index" },
     { "source": "/api/blogs/:slug", "destination": "/api/blogs/[slug]" },

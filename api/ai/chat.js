@@ -1,12 +1,18 @@
-const setCors = require("../../server/middleware/cors");
+const setCors   = require("../../server/middleware/cors");
+const rateLimit = require("../../server/middleware/rateLimit");
 // ─── Vercel Serverless Function — Gemini Flash Proxy ─────────────────────────
 const GEMINI_MODEL = "gemini-2.5-flash";
+
+// 20 requests per hour per IP — this proxies a paid Gemini call, so it needs a
+// throttle to keep a scripted caller from running up the API bill.
+const chatRateLimit = rateLimit({ windowMs: 60 * 60 * 1000, max: 20, prefix: "ai-chat" });
 
 module.exports = async function handler(req, res) {
   setCors(req, res);
 
   if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST")   return res.status(405).send("Method not allowed");
+  if (await chatRateLimit(req, res)) return;
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return res.status(500).send("Missing GEMINI_API_KEY");

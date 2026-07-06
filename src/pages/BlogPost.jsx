@@ -10,6 +10,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import MDPreview from "@uiw/react-markdown-preview";
+import { defaultUrlTransform } from "react-markdown";
 import { blogAPI } from "../services/api";
 import { fadeUp } from "../utils/motionVariants";
 
@@ -140,7 +141,7 @@ export default function BlogPost() {
               },
             }}
           >
-            <MDPreview source={post.content} />
+            <MDPreview source={post.content} skipHtml urlTransform={defaultUrlTransform} />
           </Box>
         </motion.div>
 

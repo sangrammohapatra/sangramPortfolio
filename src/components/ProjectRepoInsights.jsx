@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
-  Box, Typography, Skeleton, Chip, useTheme, IconButton, Tooltip,
+  Box, Typography, Skeleton, Chip, useTheme, IconButton, Tooltip, Button,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -122,10 +122,6 @@ export default function ProjectRepoInsights({ githubUrl, projectColor }) {
   const primary = projectColor || theme.palette.primary.main;
   const secondary = theme.palette.secondary?.main || "#f0b429";
 
-  useEffect(() => {
-    if (githubUrl) analyze(githubUrl);
-  }, [githubUrl]);
-
   const ts = data?.analysis?.tech_stack || {};
   const allTechCount = [
     ...(ts.frontend || []),
@@ -186,6 +182,24 @@ export default function ProjectRepoInsights({ githubUrl, projectColor }) {
             </Typography>
           )}
         </Box>
+
+        {/* Idle — requires an explicit click so bots/crawlers can't trigger paid API calls just by loading the page */}
+        {!data && !loading && !error && (
+          <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<AutoAwesomeIcon />}
+              onClick={() => analyze(githubUrl)}
+              sx={{
+                fontSize: "0.75rem", borderColor: primary, color: primary,
+                "&:hover": { borderColor: primary, background: `${primary}12` },
+              }}
+            >
+              Analyze Repository
+            </Button>
+          </Box>
+        )}
 
         {/* Loading */}
         {loading && <InsightsSkeleton />}

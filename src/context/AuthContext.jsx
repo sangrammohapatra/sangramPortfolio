@@ -8,23 +8,22 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token    = localStorage.getItem("admin_token");
-    const username = localStorage.getItem("admin_username");
-    if (token && username) setAdmin({ token, username });
-    setLoading(false);
+    // The token lives in an httpOnly cookie the JS can't read, so recover the
+    // session by asking the server to verify it.
+    authAPI.me()
+      .then((data) => setAdmin({ username: data.username }))
+      .catch(() => setAdmin(null))
+      .finally(() => setLoading(false));
   }, []);
 
   const login = async (username, password) => {
     const data = await authAPI.login(username, password);
-    localStorage.setItem("admin_token",    data.token);
-    localStorage.setItem("admin_username", data.username);
-    setAdmin({ token: data.token, username: data.username });
+    setAdmin({ username: data.username });
     return data;
   };
 
-  const logout = () => {
-    localStorage.removeItem("admin_token");
-    localStorage.removeItem("admin_username");
+  const logout = async () => {
+    await authAPI.logout().catch(() => {});
     setAdmin(null);
   };
 
