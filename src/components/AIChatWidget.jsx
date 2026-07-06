@@ -10,7 +10,7 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { RESUME_CONTEXT, SUGGESTED_QUESTIONS } from "../data/resumeContext";
+import { SUGGESTED_QUESTIONS } from "../data/resumeContext";
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 // In dev  → calls Vite proxy → localhost:3000/api/ai/chat → Vercel function
@@ -160,12 +160,13 @@ export default function AIChatWidget() {
     setStreamText("");
 
     try {
-      // Call our Vercel proxy — never exposes the API key to the browser
+      // Call our Vercel proxy — never exposes the API key to the browser.
+      // The system prompt is enforced server-side (api/ai/chat.js), not sent
+      // from here, so a direct caller can't override it to repurpose the bot.
       const res = await fetch(PROXY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          system: RESUME_CONTEXT,
           messages: nextMessages.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
