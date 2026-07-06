@@ -113,7 +113,7 @@ export default function BlogPost() {
                 color: `${theme.palette.text.secondary} !important`,
                 fontSize: "1rem",
                 lineHeight: 1.9,
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontFamily: "'Cabinet Grotesk', sans-serif",
               },
               "& .wmde-markdown h1, & .wmde-markdown h2, & .wmde-markdown h3": {
                 color: `${theme.palette.text.primary} !important`,
@@ -135,6 +135,9 @@ export default function BlogPost() {
               "& .wmde-markdown blockquote": {
                 borderLeft: `3px solid ${theme.palette.primary.main}`,
                 color: `${theme.palette.text.secondary} !important`,
+                fontFamily: "'Fraunces', serif",
+                fontStyle: "italic",
+                fontSize: "1.1rem",
               },
               "& .wmde-markdown a": {
                 color: `${theme.palette.primary.main} !important`,

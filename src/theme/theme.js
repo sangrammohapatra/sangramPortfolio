@@ -49,14 +49,14 @@ export const getTheme = (mode) => {
       accent: { green: GREEN, gold: GOLD, coral: CORAL },
     },
     typography: {
-      fontFamily: "'Plus Jakarta Sans', sans-serif",
+      fontFamily: "'Cabinet Grotesk', sans-serif",
       h1: { fontFamily: "'Syne', sans-serif", fontWeight: 800 },
       h2: { fontFamily: "'Syne', sans-serif", fontWeight: 700 },
       h3: { fontFamily: "'Syne', sans-serif", fontWeight: 700 },
       h4: { fontFamily: "'Syne', sans-serif", fontWeight: 600 },
       h5: { fontFamily: "'Syne', sans-serif", fontWeight: 600 },
       h6: { fontFamily: "'Syne', sans-serif", fontWeight: 600 },
-      button: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600, textTransform: "none" },
+      button: { fontFamily: "'Cabinet Grotesk', sans-serif", fontWeight: 600, textTransform: "none" },
     },
     shape: { borderRadius: 12 },
     components: {

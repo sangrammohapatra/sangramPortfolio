@@ -173,7 +173,8 @@ export default function Hero() {
             >
               <Typography
                 sx={{
-                  fontSize: { xs: "1.1rem", md: "1.25rem" },
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: { xs: "1rem", md: "1.1rem" },
                   color: theme.palette.text.secondary,
                   fontWeight: 500,
                   mb: 1,

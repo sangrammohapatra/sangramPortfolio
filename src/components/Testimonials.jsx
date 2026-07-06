@@ -62,7 +62,8 @@ export default function Testimonials() {
                 </Avatar>
 
                 <Typography sx={{
-                  fontSize: { xs: "1rem", md: "1.1rem" },
+                  fontFamily: "'Fraunces', serif",
+                  fontSize: { xs: "1.1rem", md: "1.25rem" },
                   color: theme.palette.text.secondary,
                   lineHeight: 1.85,
                   fontStyle: "italic",

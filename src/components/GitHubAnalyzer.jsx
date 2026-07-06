@@ -236,7 +236,7 @@ export default function GitHubAnalyzer() {
                   sx: {
                     borderRadius: 2,
                     fontSize: "0.875rem",
-                    fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+                    fontFamily: "'IBM Plex Mono', monospace",
                     background: theme.palette.background.elevated || "rgba(255,255,255,0.03)",
                     "& fieldset": { borderColor: theme.palette.divider },
                     "&:hover fieldset": { borderColor: `${primary}60` },
@@ -281,7 +281,7 @@ export default function GitHubAnalyzer() {
                     onClick={() => handleDemo(u)}
                     sx={{
                       fontSize: "0.67rem",
-                      fontFamily: "monospace",
+                      fontFamily: "'IBM Plex Mono', monospace",
                       cursor: "pointer",
                       background: theme.palette.background.elevated || "rgba(255,255,255,0.05)",
                       border: `1px solid ${theme.palette.divider}`,
@@ -363,7 +363,7 @@ export default function GitHubAnalyzer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         sx={{
-                          fontFamily: "monospace",
+                          fontFamily: "'IBM Plex Mono', monospace",
                           fontSize: "0.95rem",
                           fontWeight: 700,
                           color: primary,

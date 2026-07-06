@@ -113,7 +113,7 @@ export default function Footer() {
             © {year} Sangram Mohapatra. All rights reserved.
           </Typography>
           <Typography sx={{ fontSize: "0.78rem", color: theme.palette.text.muted }}>
-            Built with React · MUI · Framer Motion
+            Built with React · MUI · Framer Motion · Claude
           </Typography>
         </Box>
       </Box>
