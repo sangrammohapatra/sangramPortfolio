@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WorkIcon from "@mui/icons-material/Work";
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import SectionWrapper from "./SectionWrapper";
 import { experiences } from "../data/experience";
@@ -125,6 +126,82 @@ function ProjectCard({ project, index, isInView }) {
   );
 }
 
+// ── Role progression (promotions within a company) ─────────────────────────
+function RoleProgression({ roles, compact = false }) {
+  const theme = useTheme();
+  if (!roles || roles.length < 2) return null;
+
+  return (
+    <Box sx={{ mb: compact ? 1.5 : 2 }}>
+      {!compact && (
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.8, mb: 1.2 }}>
+          <TrendingUpIcon sx={{ fontSize: 16, color: theme.palette.secondary.main }} />
+          <Typography
+            sx={{
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              color: theme.palette.text.muted,
+            }}
+          >
+            Career Progression
+          </Typography>
+        </Box>
+      )}
+      <Box sx={{ position: "relative", pl: 2.5 }}>
+        <Box
+          sx={{
+            position: "absolute",
+            left: 4,
+            top: 6,
+            bottom: 6,
+            width: 2,
+            background: `linear-gradient(180deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main}20)`,
+            borderRadius: 1,
+          }}
+        />
+        {roles.map((r, i) => (
+          <Box
+            key={i}
+            sx={{ position: "relative", pb: i === roles.length - 1 ? 0 : compact ? 1 : 1.5 }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                left: -20,
+                top: 4,
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+                background: i === 0 ? theme.palette.secondary.main : theme.palette.background.default,
+                border: `2px solid ${theme.palette.secondary.main}`,
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: compact ? "0.8rem" : "0.88rem",
+                fontWeight: i === 0 ? 700 : 600,
+                color: i === 0 ? theme.palette.text.primary : theme.palette.text.secondary,
+              }}
+            >
+              {r.title}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.72rem",
+                color: theme.palette.text.muted,
+              }}
+            >
+              {r.duration}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
 // ── Timeline view ──────────────────────────────────────────────────────────
 function TimelineView({ experiences, isInView }) {
   const theme = useTheme();
@@ -188,26 +265,53 @@ function TimelineView({ experiences, isInView }) {
                 mb: 1.5,
               }}
             >
-              <Box>
-                <Typography
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                <Box
                   sx={{
-                    fontFamily: "'Syne', sans-serif",
-                    fontWeight: 800,
-                    fontSize: "1.1rem",
-                    color: theme.palette.text.primary,
+                    width: 36,
+                    height: 36,
+                    borderRadius: 2,
+                    flexShrink: 0,
+                    background: `${theme.palette.primary.main}15`,
+                    border: `1px solid ${theme.palette.primary.main}30`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
                   }}
                 >
-                  {exp.role}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: theme.palette.primary.main,
-                    fontWeight: 700,
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  {exp.company}
-                </Typography>
+                  {exp.logo ? (
+                    <Box
+                      component="img"
+                      src={exp.logo}
+                      alt={`${exp.company} logo`}
+                      sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  ) : (
+                    <WorkIcon sx={{ color: theme.palette.primary.main, fontSize: 18 }} />
+                  )}
+                </Box>
+                <Box>
+                  <Typography
+                    sx={{
+                      fontFamily: "'Syne', sans-serif",
+                      fontWeight: 800,
+                      fontSize: "1.1rem",
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    {exp.roles[0].title}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: theme.palette.primary.main,
+                      fontWeight: 700,
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    {exp.company}
+                  </Typography>
+                </Box>
               </Box>
               <Chip
                 label={exp.duration}
@@ -241,6 +345,7 @@ function TimelineView({ experiences, isInView }) {
                   />
                 ))}
             </Box>
+            <RoleProgression roles={exp.roles} compact />
             {exp.generalBullets.map((b, i) => (
               <Box key={i} sx={{ display: "flex", gap: 1.5, mb: 0.8 }}>
                 <Box
@@ -274,7 +379,7 @@ function TimelineView({ experiences, isInView }) {
 export default function Experience() {
   const theme = useTheme();
   const { ref, isInView } = useScrollAnimation();
-  const [view, setView] = useState("cards");
+  const [view, setView] = useState("timeline");
 
   return (
     <Box sx={{ background: `${theme.palette.primary.main}05` }}>
@@ -391,14 +496,28 @@ export default function Experience() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
+                          overflow: "hidden",
                         }}
                       >
-                        <WorkIcon
-                          sx={{
-                            color: theme.palette.primary.main,
-                            fontSize: 22,
-                          }}
-                        />
+                        {exp.logo ? (
+                          <Box
+                            component="img"
+                            src={exp.logo}
+                            alt={`${exp.company} logo`}
+                            sx={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <WorkIcon
+                            sx={{
+                              color: theme.palette.primary.main,
+                              fontSize: 22,
+                            }}
+                          />
+                        )}
                       </Box>
                       <Box sx={{ flex: 1 }}>
                         <Box
@@ -418,7 +537,7 @@ export default function Experience() {
                               color: theme.palette.text.primary,
                             }}
                           >
-                            {exp.role}
+                            {exp.roles[0].title}
                           </Typography>
                           <Chip
                             label={exp.type}
@@ -451,6 +570,7 @@ export default function Experience() {
                         </Typography>
                       </Box>
                     </Box>
+                    <RoleProgression roles={exp.roles} />
                     <Box sx={{ mb: 2 }}>
                       {exp.generalBullets.map((b, i) => (
                         <Box key={i} sx={{ display: "flex", gap: 1.5, mb: 1 }}>
