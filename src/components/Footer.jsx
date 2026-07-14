@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, IconButton, Divider, useTheme } from "@mui/material";
+import { Box, Typography, Divider, useTheme } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -7,6 +7,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import EmailIcon from "@mui/icons-material/Email";
 import { profile } from "../data/profile";
+import ReusableSocialButton from "./SocialHandleButton";
 
 const NAV = [
   { label: "About", href: "#about" },
@@ -18,12 +19,12 @@ const NAV = [
 ];
 
 const SOCIAL = [
-  { icon: <LinkedInIcon />, href: profile.social.linkedin, label: "LinkedIn", color: "#0A66C2" },
-  { icon: <GitHubIcon />, href: profile.social.github, label: "GitHub", color: "#6e5494" },
-  { icon: <EmailIcon />, href: `mailto:${profile.email}`, label: "Email", color: "#00ff87" },
-  { icon: <WhatsAppIcon />, href: profile.social.whatsapp, label: "WhatsApp", color: "#25D366" },
-  { icon: <InstagramIcon />, href: profile.social.instagram, label: "Instagram", color: "#E1306C" },
-  { icon: <FacebookIcon />, href: profile.social.facebook, label: "Facebook", color: "#1877F2" },
+  { icon: <LinkedInIcon />, href: profile.social.linkedin, label: "LinkedIn", color: "#0A66C2", username: "@sangram-mohapatra", about: "500+ connections" },
+  { icon: <GitHubIcon />, href: profile.social.github, label: "GitHub", color: "#6e5494", username: "@sangrammohapatra", about: "Check out my repos" },
+  { icon: <EmailIcon />, href: `mailto:${profile.email}`, label: "Email", color: "#00ff87", username: profile.email, about: "Drop me a message" },
+  { icon: <WhatsAppIcon />, href: profile.social.whatsapp, label: "WhatsApp", color: "#25D366", username: profile.phone, about: "Let's chat" },
+  { icon: <InstagramIcon />, href: profile.social.instagram, label: "Instagram", color: "#E1306C", username: "@sangramm.__", about: "Photos & moments" },
+  { icon: <FacebookIcon />, href: profile.social.facebook, label: "Facebook", color: "#1877F2", username: "sangram.mohapatra.1426", about: "Connect with me" },
 ];
 
 export default function Footer() {
@@ -82,26 +83,18 @@ export default function Footer() {
           </Box>
 
           {/* Social */}
-          <Box sx={{ display: "flex", gap: 0.8 }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
             {SOCIAL.map((s) => (
-              <IconButton
+              <ReusableSocialButton
                 key={s.label}
-                component="a"
                 href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={s.label}
-                size="small"
-                sx={{
-                  color: theme.palette.text.muted,
-                  border: `1px solid ${theme.palette.divider}`,
-                  borderRadius: 1.5,
-                  transition: "all 0.2s",
-                  "&:hover": { color: s.color, borderColor: s.color, background: `${s.color}10` },
-                }}
-              >
-                {React.cloneElement(s.icon, { fontSize: "small" })}
-              </IconButton>
+                label={s.label}
+                icon={s.icon}
+                color={s.color}
+                username={s.username}
+                about={s.about}
+                size={40}
+              />
             ))}
           </Box>
         </Box>

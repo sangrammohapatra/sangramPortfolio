@@ -26,7 +26,7 @@ export const getTheme = (mode) => {
             text: {
               primary:   "#f0fff4",
               secondary: "#7a9e88",
-              muted:     "#3a4a3f",
+              muted:     "#8eb199",
             },
             divider: "rgba(0,255,135,0.08)",
           }

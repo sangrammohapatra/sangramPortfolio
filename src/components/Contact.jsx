@@ -29,6 +29,7 @@ import emailjs from "emailjs-com";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import SectionWrapper from "./SectionWrapper";
 import ParticlesBackground from "./ParticlesBackground";
+import ReusableSocialButton from "./SocialHandleButton";
 import { profile } from "../data/profile";
 import { fadeUp } from "../utils/motionVariants";
 
@@ -42,30 +43,40 @@ const socialLinks = [
     href: profile.social.linkedin,
     label: "LinkedIn",
     color: "#0A66C2",
+    username: "@sangram-mohapatra",
+    about: "500+ connections",
   },
   {
     icon: <GitHubIcon />,
     href: profile.social.github,
     label: "GitHub",
     color: "#6e5494",
+    username: "@sangrammohapatra",
+    about: "Check out my repos",
   },
   {
     icon: <WhatsAppIcon />,
     href: profile.social.whatsapp,
     label: "WhatsApp",
     color: "#25D366",
+    username: profile.phone,
+    about: "Let's chat",
   },
   {
     icon: <InstagramIcon />,
     href: profile.social.instagram,
     label: "Instagram",
     color: "#E1306C",
+    username: "@sangramm.__",
+    about: "Photos & moments",
   },
   {
     icon: <FacebookIcon />,
     href: profile.social.facebook,
     label: "Facebook",
     color: "#1877F2",
+    username: "sangram.mohapatra.1426",
+    about: "Connect with me",
   },
 ];
 
@@ -316,35 +327,18 @@ export default function Contact() {
               >
                 Find me on
               </Typography>
-              <Box sx={{ display: "flex", gap: 1.2, flexWrap: "wrap" }}>
+              <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: 5 }}>
                 {socialLinks.map((s) => (
-                  <Box
+                  <ReusableSocialButton
                     key={s.label}
-                    component="a"
                     href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={s.label}
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 2,
-                      border: `1px solid ${theme.palette.divider}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: theme.palette.text.secondary,
-                      transition: "all 0.2s",
-                      "&:hover": {
-                        borderColor: s.color,
-                        color: s.color,
-                        background: `${s.color}10`,
-                        transform: "translateY(-2px)",
-                      },
-                    }}
-                  >
-                    {React.cloneElement(s.icon, { fontSize: "small" })}
-                  </Box>
+                    label={s.label}
+                    icon={s.icon}
+                    color={s.color}
+                    username={s.username}
+                    about={s.about}
+                    size={40}
+                  />
                 ))}
               </Box>
             </motion.div>
