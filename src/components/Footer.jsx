@@ -6,6 +6,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import EmailIcon from "@mui/icons-material/Email";
+import { useLenis } from "lenis/react";
 import { profile } from "../data/profile";
 import ReusableSocialButton from "./SocialHandleButton";
 
@@ -30,9 +31,11 @@ const SOCIAL = [
 export default function Footer() {
   const theme = useTheme();
   const year = new Date().getFullYear();
+  const lenis = useLenis();
 
   const scrollTo = (href) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    if (lenis) lenis.scrollTo(href);
+    else document.querySelector(href)?.scrollIntoView();
   };
 
   return (

@@ -126,7 +126,9 @@ export default function AIChatWidget() {
   const inputRef  = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const scroller = bottomRef.current?.parentElement;
+    if (!scroller) return;
+    scroller.scrollTo({ top: scroller.scrollHeight, behavior: "smooth" });
   }, [messages, streamText]);
 
   useEffect(() => {
@@ -296,7 +298,7 @@ export default function AIChatWidget() {
               width:  isMobile ? "100%" : 380,
             }}
           >
-            <Paper sx={{
+            <Paper data-lenis-prevent sx={{
               display: "flex", flexDirection: "column",
               height: isMobile ? "85vh" : 520,
               borderRadius: isMobile ? "20px 20px 0 0" : 3,

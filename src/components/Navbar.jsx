@@ -22,6 +22,7 @@ import Brightness7Icon from "@mui/icons-material/WbSunny";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import { profile } from "../data/profile";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -46,6 +47,7 @@ export default function Navbar({ toggleMode, mode, visible }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
+  const lenis = useLenis();
   // Banner offset — if open-to-work banner visible add ~32px
   const bannerH = visible ? 32 : 0;
 
@@ -55,6 +57,13 @@ export default function Navbar({ toggleMode, mode, visible }) {
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
+  // Drawer is a modal, but Lenis ignores overflow:hidden on body.
+  useEffect(() => {
+    if (!lenis) return;
+    if (drawerOpen) lenis.stop();
+    else lenis.start();
+  }, [drawerOpen, lenis]);
 
   // Intersection Observer — active section
   useEffect(() => {
@@ -81,7 +90,12 @@ export default function Navbar({ toggleMode, mode, visible }) {
       return;
     }
     setTimeout(() => {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+      if (!lenis) {
+        document.querySelector(href)?.scrollIntoView();
+        return;
+      }
+      if (href === "#hero") lenis.scrollTo(0, { force: true });
+      else lenis.scrollTo(href, { force: true });
     }, 100);
   };
 
@@ -267,6 +281,7 @@ export default function Navbar({ toggleMode, mode, visible }) {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         PaperProps={{
+          "data-lenis-prevent": true,
           sx: {
             width: 260,
             background: theme.palette.background.paper,

@@ -14,6 +14,7 @@ import BackToTop from "./components/BackToTop";
 import AIChatWidget from "./components/AIChatWidget";
 import RouteTransition from "./components/RouteTransition";
 import ReadingProgress from "./components/ReadingProgress";
+import SmoothScroll from "./components/SmoothScroll";
 
 // Public pages
 import Home from "./pages/Home";
@@ -48,7 +49,7 @@ function PublicLayout({ children, toggleMode, mode }) {
   const [visible, setVisible] = useState(profile.openToWork);
   const bannerH = visible ? 32 : 0;
   return (
-    <>
+    <SmoothScroll>
       <ReadingProgress />
       <OpenToWorkBanner visible={visible} setVisible={setVisible} />
       <Navbar toggleMode={toggleMode} mode={mode} visible={visible} />
@@ -58,7 +59,7 @@ function PublicLayout({ children, toggleMode, mode }) {
       <Footer />
       <BackToTop />
       <AIChatWidget />
-    </>
+    </SmoothScroll>
   );
 }
 

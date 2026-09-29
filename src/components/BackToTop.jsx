@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Fab, Tooltip, useTheme, Zoom } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useLenis } from "lenis/react";
 
 export default function BackToTop() {
   const theme = useTheme();
   const [show, setShow] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     const handler = () => setShow(window.scrollY > 400);
@@ -17,7 +19,7 @@ export default function BackToTop() {
       <Zoom in={show}>
         <Fab
           size="small"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => (lenis ? lenis.scrollTo(0) : window.scrollTo({ top: 0 }))}
           sx={{
             position: "fixed",
             top: "90%",

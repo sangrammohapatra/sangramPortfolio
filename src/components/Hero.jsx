@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -9,6 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useLenis } from "lenis/react";
 import { TypeAnimation } from "react-type-animation";
 import DownloadIcon from "@mui/icons-material/Download";
 import EmailIcon from "@mui/icons-material/Email";
@@ -74,15 +75,24 @@ function GridBackground() {
 export default function Hero() {
   const theme = useTheme();
   const [resumeOpen, setResumeOpen] = useState(false);
+  const lenis = useLenis();
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    if (!lenis) return;
+    if (resumeOpen) lenis.stop();
+    else lenis.start();
+  }, [resumeOpen, lenis]);
 
   // Parallax layers — different speeds create depth
   const nameY     = useTransform(scrollY, [0, 600], [0, -55]);
   const subtitleY = useTransform(scrollY, [0, 600], [0, -80]);
   const avatarY   = useTransform(scrollY, [0, 600], [0, -38]);
 
-  const handleContact = () =>
-    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+  const handleContact = () => {
+    if (lenis) lenis.scrollTo("#contact");
+    else document.querySelector("#contact")?.scrollIntoView();
+  };
 
   return (
     <>

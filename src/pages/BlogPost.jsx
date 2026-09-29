@@ -22,7 +22,6 @@ export default function BlogPost() {
   const [error, setError]   = useState("");
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     setLoading(true);
     blogAPI.getBySlug(slug)
       .then(setPost)

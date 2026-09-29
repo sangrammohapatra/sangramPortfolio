@@ -63,7 +63,7 @@ export const getTheme = (mode) => {
       MuiCssBaseline: {
         styleOverrides: {
           "*": { boxSizing: "border-box" },
-          html: { scrollBehavior: "smooth" },
+          html: { scrollPaddingTop: "96px" },
           "::-webkit-scrollbar": { width: "5px" },
           "::-webkit-scrollbar-track": { background: "transparent" },
           "::-webkit-scrollbar-thumb": {

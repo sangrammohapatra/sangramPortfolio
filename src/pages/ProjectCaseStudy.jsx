@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -66,10 +66,6 @@ export default function ProjectCaseStudy() {
   const { slug } = useParams();
   const theme = useTheme();
   const project = projects.find((p) => p.slug === slug);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [slug]);
 
   if (!project) {
     return (
@@ -526,7 +522,6 @@ export default function ProjectCaseStudy() {
                   key={p.id}
                   component={Link}
                   to={`/projects/${p.slug}`}
-                  onClick={() => window.scrollTo(0, 0)}
                   sx={{
                     p: 2.5,
                     textDecoration: "none",
